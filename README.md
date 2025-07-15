@@ -122,7 +122,15 @@
 ### 👉**更新日志**
 
 <details close> 
-<summary> <b>2025-04-26 (newest 🎉🎉🎉)</b> </summary>
+<summary> <b>2025-07-15</b> </summary>
+
+- 新增华为昇腾910B NPU支持
+- 在trainer_npu目录下提供适配NPU的训练脚本
+- 移除4bit量化和DeepSpeed优化，专注于NPU单卡训练
+</details>
+
+<details close> 
+<summary> <b>2025-04-26</b> </summary>
 
 - 重要更新
 - 如有兼容性需要，可访问[🔗旧仓库内容🔗](https://github.com/jingyaogong/minimind/tree/7da201a944a90ed49daef8a0265c959288dff83a)。
@@ -285,6 +293,27 @@ print(torch.cuda.is_available())
 下载whl文件安装。参考[链接](https://blog.csdn.net/weixin_45456738/article/details/141029610?ops_request_misc=&request_id=&biz_id=102&utm_term=%E5%AE%89%E8%A3%85torch&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-2-141029610.nonecase&spm=1018.2226.3001.4187)
 
 </details>
+
+### 华为昇腾910B NPU支持
+
+我们提供了专门针对华为昇腾910B NPU优化的训练脚本，位于`trainer_npu`目录下。使用这些脚本前，请确保已安装昇腾AI处理器配套软件包（如torch_npu）。
+
+```bash
+# 使用NPU进行预训练
+cd trainer_npu
+python train_pretrain.py --use_npu
+
+# 使用NPU进行监督微调
+python train_full_sft.py --use_npu
+
+# 使用NPU进行LoRA微调
+python train_lora.py --use_npu
+
+# 使用NPU进行DPO训练
+python train_dpo.py --use_npu
+```
+
+> 注意：NPU训练脚本移除了4bit量化和DeepSpeed支持，专注于单卡NPU优化。请根据您的硬件配置调整batch_size等参数。
 
 ### 2.数据下载
 
@@ -1456,5 +1485,3 @@ ollama run minimind2
 # License
 
 This repository is licensed under the [Apache-2.0 License](LICENSE).
-
-
